@@ -3,7 +3,7 @@ use yew_router::prelude::*;
 
 use crate::app::AppRoute;
 use crate::hooks::use_user_context;
-use crate::hooks::UserInfo;
+use crate::types::UserInfo;
 
 #[function_component(Header)]
 pub fn header() -> Html {
@@ -12,8 +12,7 @@ pub fn header() -> Html {
     html!{
         <nav class="navbar">
             <div>
-               
-                <Link<AppRoute> to={AppRoute::Home} classes="name">{ "Test Name" }</Link<AppRoute>>
+                <Link<AppRoute> to={AppRoute::Home} classes="name">{ "URL Shortener" }</Link<AppRoute>>
                 {
                     logged_out_view()
                     // if user_ctx.is_authenticated() {

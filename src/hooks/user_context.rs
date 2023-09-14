@@ -6,23 +6,7 @@ use yew_router::prelude::*;
 
 use crate::app::AppRoute;
 use crate::services::requests::set_token;
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
-#[serde(rename_all = "camelCase")]
-pub struct UserInfo {
-    pub email: String,
-    pub token: String,
-    pub username: String,
-    pub bio: Option<String>,
-    pub image: Option<String>,
-}
-
-impl UserInfo {
-    pub fn is_authenticated(&self) -> bool {
-        !self.token.is_empty()
-    }
-}
-
+use crate::types::UserInfo;
 /// State handle for the [`use_user_context`] hook.
 pub struct UseUserContextHandle {
     inner: UseStateHandle<UserInfo>,

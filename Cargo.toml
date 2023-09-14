@@ -5,7 +5,7 @@ edition = "2021"
 description = "Template for starting a Yew project using Trunk"
 readme = "README.md"
 repository = "https://github.com/yewstack/yew-trunk-minimal-template"
-license = "MIT OR Apache-2.0"
+license = "MIT"
 keywords = ["yew", "trunk"]
 categories = ["gui", "wasm", "web-programming"]
 
@@ -22,3 +22,17 @@ reqwest = { version = "0.11.13", features = ["json"] }
 wasm-bindgen = "0.2"
 wasm-logger = "0.2"
 parking_lot = "0.12.1"
+thiserror = "1"
+log = "0.4"
+material-yew = "0.3"
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "Document",
+  "Element",
+  "Node",
+  "Window",
+  "HtmlCollection",
+  "HtmlInputElement",
+]
