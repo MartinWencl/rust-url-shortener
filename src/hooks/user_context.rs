@@ -1,0 +1,90 @@
+use std::fmt;
+use std::ops::Deref;
+use serde::{Deserialize, Serialize};
+use yew::prelude::*;
+use yew_router::prelude::*;
+
+use crate::app::AppRoute;
+use crate::services::requests::set_token;
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct UserInfo {
+    pub email: String,
+    pub token: String,
+    pub username: String,
+    pub bio: Option<String>,
+    pub image: Option<String>,
+}
+
+impl UserInfo {
+    pub fn is_authenticated(&self) -> bool {
+        !self.token.is_empty()
+    }
+}
+
+/// State handle for the [`use_user_context`] hook.
+pub struct UseUserContextHandle {
+    inner: UseStateHandle<UserInfo>,
+    navigator: Navigator,
+}
+
+impl Deref for UseUserContextHandle {
+    type Target = UserInfo;
+
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+
+impl Clone for UseUserContextHandle {
+    fn clone(&self) -> Self {
+        Self {
+            inner: self.inner.clone(),
+            navigator: self.navigator.clone(),
+        }
+    }
+}
+
+impl PartialEq for UseUserContextHandle {
+    fn eq(&self, other: &Self) -> bool {
+        *self.inner == *other.inner
+    }
+}
+
+impl fmt::Debug for UseUserContextHandle {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("UseUserContextHandle")
+            .field("value", &format!("{:?}", *self.inner))
+            .finish()
+    }
+}
+
+impl UseUserContextHandle {
+    pub fn login(&self, value: UserInfo) {
+        // Set global token after logged in
+        set_token(Some(value.token.clone()));
+        self.inner.set(value);
+        // Redirect to home page
+        self.navigator.push(&AppRoute::Home);
+    }
+
+    pub fn logout(&self) {
+        // Clear global token after logged out
+        set_token(None);
+        self.inner.set(UserInfo::default());
+        // Redirect to home page
+        self.navigator.push(&AppRoute::Home);
+    }
+
+    pub fn is_authenticated(&self) -> bool {
+        self.inner.is_authenticated()
+    }
+}
+#[hook]
+pub fn use_user_context() -> UseUserContextHandle {
+    let inner = use_context::<UseStateHandle<UserInfo>>().unwrap();
+    let navigator = use_navigator().unwrap();
+
+    UseUserContextHandle { inner, navigator }
+}

@@ -1,0 +1,24 @@
+[package]
+name = "blog"
+version = "0.1.0"
+edition = "2021"
+description = "Template for starting a Yew project using Trunk"
+readme = "README.md"
+repository = "https://github.com/yewstack/yew-trunk-minimal-template"
+license = "MIT OR Apache-2.0"
+keywords = ["yew", "trunk"]
+categories = ["gui", "wasm", "web-programming"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+yew = { version="0.20", features=["csr"] }
+yew-router = "0.17.0"
+yew-hooks = "0.2.0"
+serde = "1"
+dotenv_codegen = "0.15.0"
+gloo = "0.8"
+lazy_static = "1.4.0"
+reqwest = { version = "0.11.13", features = ["json"] }
+wasm-bindgen = "0.2"
+wasm-logger = "0.2"
+parking_lot = "0.12.1"
