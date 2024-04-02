@@ -53,14 +53,14 @@ impl Redirection {
             .bind(&self.to)
             .fetch_one(pool)
             .await?;
-        log::info!("Inserted redirect with id {:?}", redirect_id.0);
+        log::debug!("Inserted redirect with id {:?}", redirect_id.0);
 
         sqlx::query("INSERT INTO Redirects_Users (redirect_id, user_id) VALUES ($1, $2)")
             .bind(&redirect_id.0)
             .bind(&user)
             .execute(pool)
             .await?;
-        log::info!("Inserted redirect for user {:?}", user);
+        log::debug!("Inserted redirect for user {:?}", user);
 
         self.to = Some(url.to_string());
         Ok(())

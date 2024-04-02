@@ -34,6 +34,7 @@ CMD [ "cargo", "run", "--offline" ]
 FROM base AS builder
 
 RUN cargo build --release --offline
+RUN sqlx database reset --database-url postgres://postgres:1234@localhost/url
 
 FROM debian:buster-slim
 

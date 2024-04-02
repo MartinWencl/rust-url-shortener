@@ -4,7 +4,7 @@ database_alias = "url"
 
 [api]
 # prefix = "api"
-url_directory = "url"
+url_directory = "/url"
 
 [login]
 user = "postgres"
@@ -12,4 +12,4 @@ password = "1234"
 
 [log]
 enabled = true
-path = "url.log"
+path = "./url.log"
