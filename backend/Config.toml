@@ -13,3 +13,4 @@ password = "1234"
 [log]
 enabled = true
 path = "./url.log"
+debug = true

@@ -38,3 +38,4 @@ CREATE TABLE Redirects_Users (
       FOREIGN KEY (redirect_id) 
         REFERENCES Redirects (redirect_id)
 );
+

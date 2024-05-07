@@ -21,7 +21,6 @@ impl Redirection {
             .bind(&self.from)
             .fetch_one(pool)
             .await?;
-        log::debug!("Running a query to get url.");
 
         let result = if row.0.is_empty() {
             None
@@ -32,7 +31,7 @@ impl Redirection {
         Ok(result)
     }
 
-    pub async fn set_outcoming_url(&mut self, url: &str, user: &str, pool: &PgPool) -> Result<(), sqlx::Error> {
+    pub async fn set_outgoing_url(&mut self, url: &str, user: &str, pool: &PgPool) -> Result<(), sqlx::Error> {
         let user_id: Result<(String, ), _> = sqlx::query_as("SELECT user_id FROM Users WHERE user_id = $1 LIMIT 1")
             .bind(&user)
             .fetch_one(pool)
@@ -53,14 +52,12 @@ impl Redirection {
             .bind(&self.to)
             .fetch_one(pool)
             .await?;
-        log::debug!("Inserted redirect with id {:?}", redirect_id.0);
 
         sqlx::query("INSERT INTO Redirects_Users (redirect_id, user_id) VALUES ($1, $2)")
             .bind(&redirect_id.0)
             .bind(&user)
             .execute(pool)
             .await?;
-        log::debug!("Inserted redirect for user {:?}", user);
 
         self.to = Some(url.to_string());
         Ok(())

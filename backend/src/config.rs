@@ -27,6 +27,7 @@ pub struct DBConfig {
 pub struct LogConfig {
     pub enabled: bool,
     pub path: String,
+    pub debug: Option<bool>,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Clone)]
@@ -45,7 +46,7 @@ pub struct Config {
 
 impl Config {
     pub fn build() -> Result<Self, Box<dyn Error>> {
-        let config: Config = toml::from_str(&fs::read_to_string("Config.toml")?).expect("Config not found!");
+        let config: Config = toml::from_str(&fs::read_to_string("Config.toml")?).expect("Loading config failed!");
         Ok(config)
     }
 }

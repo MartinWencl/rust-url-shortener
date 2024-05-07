@@ -11,7 +11,7 @@ BEGIN
   RETURNING user_id INTO id;
 
   INSERT INTO Redirects ( url_from, url_to ) 
-  VALUES ( 'urlFrom', 'urlTo' )
+  VALUES ( 'TestUrlFrom', 'TestUrlTo' )
   RETURNING redirect_id INTO red_id;
 
   INSERT INTO Redirects_Users ( redirect_id, user_id ) 
